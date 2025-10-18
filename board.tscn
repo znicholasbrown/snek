@@ -1,7 +1,7 @@
-[gd_scene load_steps=8 format=4 uid="uid://bmo03ntdfl03o"]
+[gd_scene load_steps=7 format=4 uid="uid://bmo03ntdfl03o"]
 
 [ext_resource type="Texture2D" uid="uid://dkdters6p1w17" path="res://icon.svg" id="1_p0ybc"]
-[ext_resource type="Script" uid="uid://b6aibnjolvhq" path="res://player.gd" id="4_jqgjh"]
+[ext_resource type="PackedScene" uid="uid://c030dpyucoy1c" path="res://player.tscn" id="2_psm7c"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_psm7c"]
 texture = ExtResource("1_p0ybc")
@@ -16,12 +16,12 @@ sources/0 = SubResource("TileSetAtlasSource_psm7c")
 texture = ExtResource("1_p0ybc")
 texture_region_size = Vector2i(128, 128)
 0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
 
 [sub_resource type="TileSet" id="TileSet_jqgjh"]
 tile_size = Vector2i(128, 128)
+physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_8l818")
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8l818"]
 
 [node name="Board" type="Node2D"]
 
@@ -37,17 +37,10 @@ modulate = Color(0, 0.605038, 0.605038, 1)
 tile_map_data = PackedByteArray("AAD//wIAAAAAAAAAAAD//wMAAAAAAAAAAAD//wQAAAAAAAAAAAD//wUAAAAAAAAAAAD//wYAAAAAAAAAAAD//wcAAAAAAAAAAAD//wgAAAAAAAAAAAD//wkAAAAAAAAAAAD//woAAAAAAAAAAAD//wsAAAAAAAAAAAD//wwAAAAAAAAAAAD//w0AAAAAAAAAAAD//w4AAAAAAAAAAAD//w8AAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAEAAAAAAAAAAAAPAAIAAAAAAAAAAAAPAAMAAAAAAAAAAAAPAAQAAAAAAAAAAAAPAAUAAAAAAAAAAAAPAAYAAAAAAAAAAAAPAAcAAAAAAAAAAAAPAAgAAAAAAAAAAAAPAAkAAAAAAAAAAAAPAAoAAAAAAAAAAAAPAAsAAAAAAAAAAAAPAAwAAAAAAAAAAAAPAA0AAAAAAAAAAAAPAA4AAAAAAAAAAAAPAA8AAAAAAAAAAAAAAA8AAAAAAAAAAAABAA8AAAAAAAAAAAACAA8AAAAAAAAAAAADAA8AAAAAAAAAAAAEAA8AAAAAAAAAAAAFAA8AAAAAAAAAAAAGAA8AAAAAAAAAAAAHAA8AAAAAAAAAAAAIAA8AAAAAAAAAAAAJAA8AAAAAAAAAAAAKAA8AAAAAAAAAAAALAA8AAAAAAAAAAAAMAA8AAAAAAAAAAAANAA8AAAAAAAAAAAAOAA8AAAAAAAAAAAD/////AAAAAAAAAAD//wAAAAAAAAAAAAD//wEAAAAAAAAAAAAAAP//AAAAAAAAAAABAP//AAAAAAAAAAACAP//AAAAAAAAAAADAP//AAAAAAAAAAAEAP//AAAAAAAAAAAFAP//AAAAAAAAAAAGAP//AAAAAAAAAAAHAP//AAAAAAAAAAAIAP//AAAAAAAAAAAJAP//AAAAAAAAAAAKAP//AAAAAAAAAAALAP//AAAAAAAAAAAMAP//AAAAAAAAAAANAP//AAAAAAAAAAAOAP//AAAAAAAAAAAPAP//AAAAAAAAAAA=")
 tile_set = SubResource("TileSet_jqgjh")
 
-[node name="Player" type="CharacterBody2D" parent="."]
-script = ExtResource("4_jqgjh")
+[node name="Player" parent="." node_paths=PackedStringArray("tile_map_layer") instance=ExtResource("2_psm7c")]
+position = Vector2(960, 960)
+tile_map_layer = NodePath("../TileMapLayer")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
-shape = SubResource("CapsuleShape2D_8l818")
-
-[node name="Sprite2D" type="Sprite2D" parent="Player"]
-position = Vector2(192, 320)
-texture = ExtResource("1_p0ybc")
-
-[node name="MoveTimer" type="Timer" parent="Player"]
-unique_name_in_owner = true
-
-[connection signal="timeout" from="Player/MoveTimer" to="Player" method="_on_move_timer_timeout"]
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(952, 928)
+zoom = Vector2(0.5, 0.5)
