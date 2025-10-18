@@ -1,15 +1,13 @@
-class_name Body extends Node2D
+class_name Body extends Node
 
-@onready var _child : Body
+func move(next_position: Vector2) -> void:
+	var segments = get_children()
+	var toward = next_position
+	for segment in segments:
+		if segment is BodySegment:
+			segment.move_and_collide(toward - segment.global_position)
+			toward = segment.global_position
 
-func _ready() -> void:
-	var child = find_child("Body")
-	if child and child.is_in_group("body"):
-		_child = child
-
-func move(pos: Vector2):
-	var child_next : Vector2i = position
-	position = pos
-	
-	if _child:
-		_child.move(child_next)
+func add_segment() -> void:
+	var segment = BodySegment.new()
+	add_child(segment)

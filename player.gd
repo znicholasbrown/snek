@@ -2,9 +2,8 @@ extends CharacterBody2D
 
 @export var tile_map_layer : TileMapLayer
 @export var speed : float = 10.0
+@export var body : Body
 
-
-var _global_speed : float = 128.0
 var _direction : Vector2 = Vector2(0, -1)
 
 func _ready() -> void:
@@ -17,7 +16,7 @@ func _get_global_speed_for_direction(direction: Vector2i) -> float:
 	if direction.x != 0:
 		return tile_map_layer.tile_set.tile_size.x * speed
 	
-	return  tile_map_layer.tile_set.tile_size.y * speed
+	return tile_map_layer.tile_set.tile_size.y * speed
 
 func _physics_process(delta: float) -> void:
 	_update_direction()
@@ -29,6 +28,19 @@ func _update_direction() -> void:
 		_direction = axis
 
 func _move(delta: float) -> void:
-	var _motion = _direction * delta * _get_global_speed_for_direction(_direction)
-	move_and_collide(_motion)
+	var motion = _direction * delta * _get_global_speed_for_direction(_direction)
+	var collided = move_and_collide(motion)
 	
+	if collided:
+		_handle_collision(collided)
+		
+	body.move(global_position)
+	
+func _handle_collision(collision: KinematicCollision2D) -> void:
+	var collider = collision.get_collider()
+	var groups = collider.get_groups() # this is wrong!!!!
+	if collider.is_in_group("food"):
+		# add body segment!!!
+		pass
+		
+	GameManager.game_over()

@@ -1,7 +1,9 @@
-[gd_scene load_steps=7 format=4 uid="uid://bmo03ntdfl03o"]
+[gd_scene load_steps=9 format=4 uid="uid://bmo03ntdfl03o"]
 
 [ext_resource type="Texture2D" uid="uid://dkdters6p1w17" path="res://icon.svg" id="1_p0ybc"]
 [ext_resource type="PackedScene" uid="uid://c030dpyucoy1c" path="res://player.tscn" id="2_psm7c"]
+[ext_resource type="PackedScene" uid="uid://cggsbgt8h5m65" path="res://body.tscn" id="3_8l818"]
+[ext_resource type="PackedScene" uid="uid://bqg3npundwww4" path="res://food.tscn" id="4_jqgjh"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_psm7c"]
 texture = ExtResource("1_p0ybc")
@@ -37,10 +39,16 @@ modulate = Color(0, 0.605038, 0.605038, 1)
 tile_map_data = PackedByteArray("AAD//wIAAAAAAAAAAAD//wMAAAAAAAAAAAD//wQAAAAAAAAAAAD//wUAAAAAAAAAAAD//wYAAAAAAAAAAAD//wcAAAAAAAAAAAD//wgAAAAAAAAAAAD//wkAAAAAAAAAAAD//woAAAAAAAAAAAD//wsAAAAAAAAAAAD//wwAAAAAAAAAAAD//w0AAAAAAAAAAAD//w4AAAAAAAAAAAD//w8AAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAEAAAAAAAAAAAAPAAIAAAAAAAAAAAAPAAMAAAAAAAAAAAAPAAQAAAAAAAAAAAAPAAUAAAAAAAAAAAAPAAYAAAAAAAAAAAAPAAcAAAAAAAAAAAAPAAgAAAAAAAAAAAAPAAkAAAAAAAAAAAAPAAoAAAAAAAAAAAAPAAsAAAAAAAAAAAAPAAwAAAAAAAAAAAAPAA0AAAAAAAAAAAAPAA4AAAAAAAAAAAAPAA8AAAAAAAAAAAAAAA8AAAAAAAAAAAABAA8AAAAAAAAAAAACAA8AAAAAAAAAAAADAA8AAAAAAAAAAAAEAA8AAAAAAAAAAAAFAA8AAAAAAAAAAAAGAA8AAAAAAAAAAAAHAA8AAAAAAAAAAAAIAA8AAAAAAAAAAAAJAA8AAAAAAAAAAAAKAA8AAAAAAAAAAAALAA8AAAAAAAAAAAAMAA8AAAAAAAAAAAANAA8AAAAAAAAAAAAOAA8AAAAAAAAAAAD/////AAAAAAAAAAD//wAAAAAAAAAAAAD//wEAAAAAAAAAAAAAAP//AAAAAAAAAAABAP//AAAAAAAAAAACAP//AAAAAAAAAAADAP//AAAAAAAAAAAEAP//AAAAAAAAAAAFAP//AAAAAAAAAAAGAP//AAAAAAAAAAAHAP//AAAAAAAAAAAIAP//AAAAAAAAAAAJAP//AAAAAAAAAAAKAP//AAAAAAAAAAALAP//AAAAAAAAAAAMAP//AAAAAAAAAAANAP//AAAAAAAAAAAOAP//AAAAAAAAAAAPAP//AAAAAAAAAAA=")
 tile_set = SubResource("TileSet_jqgjh")
 
-[node name="Player" parent="." node_paths=PackedStringArray("tile_map_layer") instance=ExtResource("2_psm7c")]
+[node name="Player" parent="." node_paths=PackedStringArray("tile_map_layer", "body") instance=ExtResource("2_psm7c")]
 position = Vector2(960, 960)
 tile_map_layer = NodePath("../TileMapLayer")
+body = NodePath("../Body")
+
+[node name="Body" parent="." instance=ExtResource("3_8l818")]
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(952, 928)
 zoom = Vector2(0.5, 0.5)
+
+[node name="Food" parent="." instance=ExtResource("4_jqgjh")]
+position = Vector2(960, 452)

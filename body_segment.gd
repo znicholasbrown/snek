@@ -1,0 +1,1 @@
+class_name BodySegment extends CharacterBody2D

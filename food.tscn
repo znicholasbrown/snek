@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://bqg3npundwww4"]
+
+[ext_resource type="Texture2D" uid="uid://dkdters6p1w17" path="res://icon.svg" id="1_8txok"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pohk7"]
+size = Vector2(24, 24)
+
+[node name="Food" type="StaticBody2D" groups=["food"]]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 0, 1)
+scale = Vector2(0.1875, 0.1875)
+texture = ExtResource("1_8txok")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_pohk7")
