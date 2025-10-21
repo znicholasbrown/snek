@@ -6,6 +6,7 @@
 size = Vector2(24, 24)
 
 [node name="Food" type="StaticBody2D" groups=["food"]]
+collision_mask = 0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(1, 1, 0, 1)

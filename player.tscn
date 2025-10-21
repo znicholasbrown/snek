@@ -1,18 +1,64 @@
-[gd_scene load_steps=4 format=3 uid="uid://c030dpyucoy1c"]
+[gd_scene load_steps=5 format=3 uid="uid://c030dpyucoy1c"]
 
 [ext_resource type="Script" uid="uid://b6aibnjolvhq" path="res://player.gd" id="1_onrkg"]
-[ext_resource type="Texture2D" uid="uid://dkdters6p1w17" path="res://icon.svg" id="2_i3pqv"]
+[ext_resource type="Script" uid="uid://b78usbm66swho" path="res://body.gd" id="2_onrkg"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_onrkg"]
-size = Vector2(128, 128)
+[sub_resource type="Curve2D" id="Curve2D_onrkg"]
 
-[node name="Player" type="CharacterBody2D"]
+[sub_resource type="Curve" id="Curve_onrkg"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.9, 0.821179), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("body")]
 motion_mode = 1
 script = ExtResource("1_onrkg")
+body = NodePath("Line2D")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(0, -2.38419e-07)
-texture = ExtResource("2_i3pqv")
+[node name="Skeleton2D" type="Skeleton2D" parent="."]
+unique_name_in_owner = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_onrkg")
+[node name="Head" type="Bone2D" parent="Skeleton2D"]
+unique_name_in_owner = true
+rest = Transform2D(1, 0, 0, 1, 0, 0)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="Bone2D" type="Bone2D" parent="Skeleton2D/Head"]
+position = Vector2(16, 0)
+rest = Transform2D(1, 0, 0, 1, 16, 0)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="Bone2D2" type="Bone2D" parent="Skeleton2D/Head/Bone2D"]
+position = Vector2(16, 0)
+rest = Transform2D(1, 0, 0, 1, 16, 0)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="Body" type="Path2D" parent="." node_paths=PackedStringArray("skeleton_shape")]
+unique_name_in_owner = true
+modulate = Color(0.880538, 0, 0.124845, 1)
+curve = SubResource("Curve2D_onrkg")
+script = ExtResource("2_onrkg")
+skeleton_shape = NodePath("../Line2D")
+metadata/_edit_lock_ = true
+
+[node name="Line2D" type="Line2D" parent="."]
+points = PackedVector2Array(16, 0)
+width = 128.0
+width_curve = SubResource("Curve_onrkg")
+default_color = Color(1.44392e-06, 0.421485, 0.530949, 1)
+metadata/_edit_lock_ = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.5, 0.5)
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+visible = false
+build_mode = 1
+polygon = PackedVector2Array(-8, -8, -8, 8, 8, 8, 8, -8)
+metadata/_edit_lock_ = true

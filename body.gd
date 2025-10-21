@@ -1,13 +1,19 @@
-class_name Body extends Node
+@tool class_name Body extends Path2D
 
-func move(next_position: Vector2) -> void:
-	var segments = get_children()
-	var toward = next_position
-	for segment in segments:
-		if segment is BodySegment:
-			segment.move_and_collide(toward - segment.global_position)
-			toward = segment.global_position
+@export var skeleton_shape: Line2D
 
-func add_segment() -> void:
-	var segment = BodySegment.new()
-	add_child(segment)
+func _process(_delta: float) -> void:
+	if not skeleton_shape:
+		return
+	if not skeleton_shape.curve:
+		#points = []
+		return
+	#points = skeleton_shape.curve.get_baked_points()
+
+func _get_configuration_warnings() -> PackedStringArray:
+	var warnings = []
+	
+	if not skeleton_shape:
+		warnings.append("Need to assign the skeleton_shape (Path2D) to the body")
+		
+	return warnings
